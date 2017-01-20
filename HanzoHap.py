@@ -21,5 +21,9 @@ with open("test.bin", "rb") as Hap:
             pass
 
 name = int(input())
-print(sorted(champ_ID[name],key=itemgetter(1)))
 
+result = sorted(champ_ID[name], key = itemgetter(1))
+try:
+    print(result[0:5])
+except:
+    print(result)
