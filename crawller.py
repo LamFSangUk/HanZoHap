@@ -4,7 +4,7 @@ import urllib.request
 
 count=0
 
-f=open('champNameById.txt','r')
+f=open('champNameById.txt','w')
 
 for i in range(1,500):
 
@@ -16,12 +16,12 @@ for i in range(1,500):
         encoding=x.info().get_content_charset('utf8')
         data=json.loads(rawData.decode(encoding))
 
-        f.write(data)
+        f.write(str(data))
         count+=1
     except:
         print("skip")
 
-f.write(data)
+f.write(str(count))
 f.close()
 
 #with open('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/1?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059',encoding='utf-8') as jsonData:
