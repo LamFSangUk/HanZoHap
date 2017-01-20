@@ -15,8 +15,10 @@ for i in range(1,500):
         rawData=x.read()
         encoding=x.info().get_content_charset('utf8')
         data=json.loads(rawData.decode(encoding))
-
-        f.write(str(data))
+        f.write(str(data['id'])+' '+str(data['name'])+'\n')
+        #strdata=data['id']+' '+data['name']
+        #print(strdata)
+        #f.write()
         count+=1
     except:
         print("skip")
