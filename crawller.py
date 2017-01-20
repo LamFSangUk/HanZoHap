@@ -72,7 +72,16 @@ def MatchlistCrawller():
 
 def MatchInfoCrawller():
 
-    URL=''
+    matchInfo=input()
+
+    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+matchInfo+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
+    x = urllib.request.urlopen(URL)
+    rawData = x.read()
+    encoding = x.info().get_content_charset('utf-8')
+    data = json.loads(rawData.decode(encoding))
+    jsonString=json.dumps(data)
+    import pprint
+    pprint.pprint(jsonString)
 
 print("start")
-MatchlistCrawller()
+MatchInfoCrawller()
