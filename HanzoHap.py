@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
+
 from operator import itemgetter
-
 champ_ID = {}
-
-for i in range(0, 150):
-    champ_ID[i] = list()
+champ_comb = {}
 
 with open("test.bin", "rb") as Hap:
     byteBuffer = bytearray(Hap.read()).decode()
@@ -13,15 +11,35 @@ with open("test.bin", "rb") as Hap:
     for line in byte_list:
         try:
             champ_line = line.split("|")
-            for champ in champ_line[0:4]:
-                Id = int(champ)
-                tp = (champ_line, champ_line[-1])
-                champ_ID[Id].append(tp)
+            
+            champ_word = ""
+
+            for sword in champ_line[0:5]:
+                champ_word += sword + " "
+
+            for champ in champ_line[0:5]:
+                
+                word = champ_word.replace(champ,"")
+                word = word.replace("  ", " ")
+                word = word.strip()
+
+                ID = int(champ)
+                tp = (word, champ_line[-1])
+                if ID not in champ_ID:
+                    champ_ID[ID] = []
+                champ_ID[ID].append(tp)  
+                
+                if word not in  champ_comb:
+                    champ_comb[word] = []
+    
+                tp =  (champ, champ_line[-1])
+                champ_comb[word].append(tp)
         except: 
             pass
 
-name = int(input())
+print(champ_comb)
 
+name = int(input())
 result = sorted(champ_ID[name], key = itemgetter(1))
 try:
     print(result[0:5])
