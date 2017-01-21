@@ -5,35 +5,38 @@ from operator import itemgetter
 
 
 def win_rate(name):
-    champ_ID = {}
-    champ_comb = {}
+    champion_comb = {}
     with open("test.bin", "rb") as Hap:
         bytebuffer = bytearray(Hap.read()).decode()
         byte_list = bytebuffer.split("\n")
         for line in byte_list:
             try:
                 champ_line = line.split("|")
+                rate = float(champ_line[-1])
+                print(rate)
             except:
                 pass
-            for champ in champ_line[0:5]:
-                champion = champ_line[0:5]
-                champion.remove(champ)
-                champ_tmp = champion
-                champ_str = '|'.join(champion)
-                try:
-                    Id = int(champ)
-                    rate = float(champ_line[-1])
-                except:
-                    pass
-                if Id not in champ_ID:
-                    champ_ID[Id] = list()
+            try:
+                for i in range(32):
+                    on = list()
+                    no = list()
+                    for j in range(5):
+                        if ((i & (1 << j)) > 0) == True:
+                            on.append(champ_line[j])
+                        else:
+                            no.append(champ_line[j])
+                    first = '|'.join(on)
+                    second = '|'.join(no)
+                    tp1 = (second, rate)
 
-                if champ_str not in champ_comb:
-                    champ_comb[champ_str] = list()
-                tp = (champ_tmp, rate)
-                champ_ID[Id].append(tp)
-                tp = (champ, rate)
-                champ_comb[champ_str].append(tp)
+                    tp2 = (first, rate)
+                    print(tp1, tp2)
+                    champion_comb[first] = tp1
+                    champion_comb[second] = tp2
+            except:
+                pass
+    print(champion_comb)
+'''
     result = sorted(champ_ID[name], key=itemgetter(1))
     print(result)
 
@@ -41,3 +44,4 @@ def win_rate(name):
         print(result[0:5])
     except:
         print(result)
+'''
