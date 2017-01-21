@@ -18,5 +18,6 @@ with open("names.txt", "r", encoding='utf-8') as F:
         Match_List.union(crawler.MatchListCrawler(UserId))
         filenum = crawler.MatchInfoCrawler(Match_List)
         winrate.genTeamWinningRate(filenum)
+        print("younghuk")
 
 
