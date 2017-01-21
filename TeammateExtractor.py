@@ -63,14 +63,22 @@ getTeammateWinStats = lambda requestData, season : list(map(partial(makeTuple, r
 
 
 #---------------------------------------------------------------------------------------------------------------
-####               SYNTAX: getTeammateWinStats((region, UserName, API-Key), Season)                         ####   
+####               SYNTAX: getTeammateWinStats((region, UserName, API-Key), Season)                           
+####               yields, [('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total))]
+####               exceptions result in ('UserName', (0,0)) which is mostly because the summoner has never picked that champion during this season
 
 
+
+# example:
 
 def main():
    requestData = ("kr", "KDM Edge", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479")
    print(getTeammateWinStats(requestData, "2016"))
 
+
+# result: [('HALEMS', (0, 0)), ('탈 년', (1.105263157894737, 40)), ('엠빠따를 깰 남자', (0, 0)), ('원딜을왜할까', (2.1818181818181817, 35))]
+	
+	
 if __name__ == '__main__':
     main()
 
