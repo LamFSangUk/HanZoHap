@@ -3,6 +3,7 @@
 import json
 import urllib.request
 import bs4
+import requests
 
 def ChampionCrawler():
 
@@ -57,24 +58,28 @@ def SummonerNameCrawler():
 
 
 def SummonerIdCrawler(summonerName):
-    summonerName = summonerName.replace(" ", "%20")
-    print(summonerName)
-    URL='https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/'+summonerName+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
+    #summonerName = summonerName.replace(" ", "%20")
+    #print(usummonerName).encode('utf-8')
+
+    #summonerName=u = unicode(summonerName, "UTF-8")
+    URL=u'https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/%s?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'%summonerName
     print("URL " + URL)
     try:
-        x = urllib.request.urlopen(URL)
-        rawData = x.read()
-        encoding = x.info().get_content_charset('utf-8')
-        data = json.loads(rawData.decode(encoding))
+        getJSON = lambda response: response.json()
+
+        data = lambda URL: getJSON(requests.get(URL))
+        data=data(URL)
+
         print(summonerName)
-        summonerName=summonerName.replace("%20", "").lower()
-        print(summonerName)
+        summonerName=summonerName.replace(" ", "").lower()
+
+        print(data[summonerName])
         return data[summonerName]['id']
-        #for suInfo in data.values():
-        #    print(suInfo['name'],suInfo['id'])
+
 
     except:
         pass
+        #return 'err'
 
 def MatchListCrawler(summonerId):
 
