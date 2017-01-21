@@ -16,6 +16,4 @@ with open("names.txt", "r", encoding='utf-8') as F:
         UserId = crawler.SummonerIdCrawler(line)
         Match_List = set()
         Match_List.union(crawler.MatchListCrawler(UserId))
-        crawler.MatchInfoCrawler(Match_List)
-        
-
+        filenum = crawler.MatchInfoCrawler(Match_List)

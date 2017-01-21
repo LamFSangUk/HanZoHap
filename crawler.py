@@ -112,3 +112,4 @@ def MatchInfoCrawler(matchListSet):
         f.write(jsonString)
         f.close()
         filenum+=1
+        return filenum
