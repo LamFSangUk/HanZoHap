@@ -46,7 +46,7 @@ def computeWinStats(stats):
    lost = stats["totalSessionsLost"]
    won = stats["totalSessionsWon"]
    total = lost + won
-   return ((won / lost), total)
+   return (round((won / lost), 2), total)
    
    
 def makeTuple(requestData, season, elem):
