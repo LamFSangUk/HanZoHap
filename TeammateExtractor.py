@@ -75,11 +75,11 @@ getTeammateWinStats = lambda requestData, season : list(map(partial(makeTuple, r
 # example:
 
 def main():
-   requestData = ("kr", "KDM Edge", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479")
-   print(getTeammateWinStats(requestData, "2016"))
+   requestData = ("kr", "By myself", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479")
+   print(getTeammateWinStats(requestData, "2017"))
 
 
-# result: [('HALEMS', (0, 0)), ('탈 년', (1.105263157894737, 40)), ('엠빠따를 깰 남자', (0, 0)), ('원딜을왜할까', (2.1818181818181817, 35))]
+# result: [('Apay', (1.78, 25)), ('원딜둥이', (1.3, 69)), ('위로해드릴게요', (1.5, 10)), ('0r1', (1.11, 74))]
 	
 	
 if __name__ == '__main__':
