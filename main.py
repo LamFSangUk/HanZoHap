@@ -12,16 +12,17 @@ crawler.SummonerNameCrawler()
 with open("names.txt", "r", encoding='utf-8') as F:
     f_lines = F.readlines()
     for line in f_lines:
-        print(line)
+        #print(line)
         line = line.replace("\n", "")
         UserId = crawler.SummonerIdCrawler(line)
+        #print(UserId)
         UserId = str(UserId)
-        print(type(UserId))
-        Match_List = set()
+        #print(type(UserId))
+
         List = crawler.MatchListCrawler(UserId)
-        Match_List.union(List)
-    print(Match_List)
-    filenum = crawler.MatchInfoCrawler(Match_List)
-    winrate.genTeamWinningRate(int(filenum))
+        Match_List = set(List)
+    #print(Match_List)
+    crawler.MatchInfoCrawler(Match_List)
+#winrate.genTeamWinningRate(int(filenum))
 
 
