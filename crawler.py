@@ -35,7 +35,6 @@ def SummonerNameCrawler():
         cur_page = 1
         count = 0
 
-        print(num_of_names, file=fw)
         while True:
             url = 'http://lol.inven.co.kr/dataninfo/ladder/index.php?pg=' + str(cur_page)
             html = urllib.request.urlopen(url)
@@ -55,32 +54,28 @@ def SummonerNameCrawler():
             cur_page += 1
 
 
-def SummonerIdCrawler():
+def SummonerIdCrawler(summonerName):
 
-    numSummoners=int(input())
-    print(numSummoners)
+    URL='https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/'+summonerName+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
 
-    for i in range(numSummoners):
-        summonerName=input()
-        URL='https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/'+summonerName+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
+    try:
+        x = urllib.request.urlopen(URL)
+        rawData = x.read()
+        encoding = x.info().get_content_charset('utf-8')
+        data = json.loads(rawData.decode(encoding))
 
-        try:
-            x = urllib.request.urlopen(URL)
-            rawData = x.read()
-            encoding = x.info().get_content_charset('utf-8')
-            data = json.loads(rawData.decode(encoding))
-            for suInfo in data.values():
-                print(suInfo['name'],suInfo['id'])
+        return data[summonerName]['id']
+        #for suInfo in data.values():
+        #    print(suInfo['name'],suInfo['id'])
 
-        except:
-            pass
+    except:
+        pass
 
-def MatchlistCrawler():
+def MatchListCrawler(summonerId):
 
-    count=0
-    summonerID=input()
-
-    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/matchlist/by-summoner/'+summonerID+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
+#    count=0
+    matchIdList=[]
+    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/matchlist/by-summoner/'+summonerId+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
 
     try:
         x = urllib.request.urlopen(URL)
@@ -90,26 +85,28 @@ def MatchlistCrawler():
         data=data['matches']
         for game in data:
            if game['season']=='PRESEASON2017':
-            print(game['matchId'])
-            count+=1
+            #print(game['matchId'])
+            matchIdList.append(game['matchId'])
+            #count+=1
         #for matchInfo in data.values():
         #    print(matchInfo['matchId'])
-        print(count)
+        #print(count)
+        return matchIdList
     except:
         pass
 
-def MatchInfoCrawler():
+def MatchInfoCrawler(matchListSet):
 
-    matchInfo=input()
+    for matchInfo in matchListSet:
 
-    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+matchInfo+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
-    x = urllib.request.urlopen(URL)
-    rawData = x.read()
-    encoding = x.info().get_content_charset('utf-8')
-    data = json.loads(rawData.decode(encoding))
-    jsonString=json.dumps(data)
-    import pprint
-    pprint.pprint(jsonString)
-    f=open('match1.json','w')
-    f.write(jsonString)
-    f.close()
+        URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+matchInfo+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
+        x = urllib.request.urlopen(URL)
+        rawData = x.read()
+        encoding = x.info().get_content_charset('utf-8')
+        data = json.loads(rawData.decode(encoding))
+        jsonString=json.dumps(data)
+        #import pprint
+        #pprint.pprint(jsonString)
+        f=open('match1.json','w')
+        f.write(jsonString)
+        f.close()
