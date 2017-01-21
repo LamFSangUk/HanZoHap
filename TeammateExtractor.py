@@ -63,9 +63,12 @@ getTeammateWinStats = lambda requestData, season : list(map(partial(makeTuple, r
 
 
 #---------------------------------------------------------------------------------------------------------------
-####               SYNTAX: getTeammateWinStats((region, UserName, API-Key), Season)                           
-####               yields, [('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total))]
-####               exceptions result in ('UserName', (0,0)) which is mostly because the summoner has never picked that champion during this season
+#           This module calculates the Win/Lose ration of you current teammates on their current champions
+#           Using the 'getTeammateWinStats' function will return a list of tuples containing the data
+#
+####   SYNTAX: getTeammateWinStats((region, UserName, API-Key), Season)                           
+####   yields, [('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total)), ('Summoner', (win/lose, total))]
+####   exceptions result in ('UserName', (0,0)) which is mostly because the summoner has never picked that champion during this season
 
 
 
