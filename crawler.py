@@ -97,6 +97,7 @@ def MatchListCrawler(summonerId):
 
 def MatchInfoCrawler(matchListSet):
 
+    filenum=1
     for matchInfo in matchListSet:
 
         URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+matchInfo+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
@@ -107,6 +108,7 @@ def MatchInfoCrawler(matchListSet):
         jsonString=json.dumps(data)
         #import pprint
         #pprint.pprint(jsonString)
-        f=open('match1.json','w')
+        f=open('json_data/match'+filenum+'.json','w')
         f.write(jsonString)
         f.close()
+        filenum+=1
