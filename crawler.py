@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import json
 import urllib.request
 import bs4
@@ -55,15 +57,18 @@ def SummonerNameCrawler():
 
 
 def SummonerIdCrawler(summonerName):
-
+    summonerName = summonerName.replace(" ", "%20")
+    print(summonerName)
     URL='https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/'+summonerName+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
-
+    print("URL " + URL)
     try:
         x = urllib.request.urlopen(URL)
         rawData = x.read()
         encoding = x.info().get_content_charset('utf-8')
         data = json.loads(rawData.decode(encoding))
-
+        print(summonerName)
+        summonerName=summonerName.replace("%20", "").lower()
+        print(summonerName)
         return data[summonerName]['id']
         #for suInfo in data.values():
         #    print(suInfo['name'],suInfo['id'])
@@ -76,9 +81,9 @@ def MatchListCrawler(summonerId):
 #    count=0
     matchIdList=[]
     URL='https://kr.api.pvp.net/api/lol/kr/v2.2/matchlist/by-summoner/'+summonerId+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
-
+    print(summonerId)
+    x = urllib.request.urlopen(URL)
     try:
-        x = urllib.request.urlopen(URL)
         rawData = x.read()
         encoding = x.info().get_content_charset('utf-8')
         data = json.loads(rawData.decode(encoding))
@@ -98,8 +103,9 @@ def MatchListCrawler(summonerId):
 def MatchInfoCrawler(matchListSet):
 
     filenum=1
+    print(filenum)
     for matchInfo in matchListSet:
-
+        print(matchInfo)
         URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+matchInfo+'?api_key=RGAPI-a78e53a2-79a2-4191-8f80-80fd184fb059'
         x = urllib.request.urlopen(URL)
         rawData = x.read()
@@ -109,7 +115,7 @@ def MatchInfoCrawler(matchListSet):
         #import pprint
         #pprint.pprint(jsonString)
         f=open('json_data/match'+str(filenum)+'.json','w')
-        f.write(jsonString)
+        f.write(str(jsonString))
         f.close()
         filenum+=1
-        return filenum
+    return filenum
