@@ -19,11 +19,16 @@ getParticipants = lambda region, name, key : getCurrentGame(region, name, key)["
 getTeamId = lambda name, participants :  participants[0]["teamId"] if  participants[0]["summonerName"] == name else getTeamId(name, participants[1:])
 
 def getSameTeam(region, name, key) :
-   participants = getParticipants(region, name, key)
-   teamId = getTeamId(name, participants)
-   return list(map(lambda element : element["summonerName"] , list(filter(lambda element : element["teamId"] == teamId, participants))))
+   try:
+      participants = getParticipants(region, name, key)
+      teamId = getTeamId(name, participants)
+      return list(map(lambda element : element["summonerName"] , list(filter(lambda element : element["teamId"] == teamId, participants))))
+   except:
+      return []
    
    
    
    # getSameTeam("kr", "Nagne123", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479") yields,
    # ['Nagne123', 'Kf beyo', '내가강만식', '코잇컴짱좋네', '셔적적셔']
+   
+   # exceptions, errors result in empty list
