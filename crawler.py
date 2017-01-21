@@ -108,7 +108,7 @@ def MatchInfoCrawler(matchListSet):
         jsonString=json.dumps(data)
         #import pprint
         #pprint.pprint(jsonString)
-        f=open('json_data/match'+filenum+'.json','w')
+        f=open('json_data/match'+str(filenum)+'.json','w')
         f.write(jsonString)
         f.close()
         filenum+=1
