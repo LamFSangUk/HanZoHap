@@ -46,7 +46,7 @@ def computeWinStats(stats):
    lost = stats["totalSessionsLost"]
    won = stats["totalSessionsWon"]
    total = lost + won
-   return (round((won / lost), 2), total)
+   return (round((won / lost), 2) * 100, total)
    
    
 def makeTuple(requestData, season, elem):
@@ -75,11 +75,11 @@ getTeammateWinStats = lambda requestData, season : list(map(partial(makeTuple, r
 # example:
 
 def main():
-   requestData = ("kr", "By myself", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479")
+   requestData = ("kr", "BoRoona", "RGAPI-9d1b6e21-7e34-4c01-9b20-a26041518479")
    print(getTeammateWinStats(requestData, "2017"))
 
 
-# result: [('Apay', (1.78, 25)), ('원딜둥이', (1.3, 69)), ('위로해드릴게요', (1.5, 10)), ('0r1', (1.11, 74))]
+# result: [('Fq Gaia', (100.0, 2)), ('신들린써페', (84.0, 68)), ('원딜프로지망1', (70.0, 107)), ('Life one', (67.0, 36))]
 	
 	
 if __name__ == '__main__':
