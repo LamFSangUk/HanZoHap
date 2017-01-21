@@ -39,7 +39,7 @@ def getSameTeam(requestData) :
 	  
 summonerStatsURL = lambda region, SumID, season, key : "https://" + region + ".api.pvp.net/api/lol/" + region + "/v1.3/stats/by-summoner/" + SumID + "/ranked?season=SEASON" + season + "&api_key=" + key
 	  
-getSummonerStats = lambda region, name, season, key :   getJSONData(summonerStatsURL(region, str(getSummonerID(region, name, key)), season, key))
+getSummonerStats = lambda requestData, season :   requestJSON(summonerStatsURL(requestData[0], str(getSummonerID(requestData)), season, requestData[2]))
 
 computeStatsFromJSON = lambda 
 
