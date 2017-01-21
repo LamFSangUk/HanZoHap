@@ -6,7 +6,7 @@ import bs4
 import requests
 from API import api_key
 
-api_idx=10
+api_idx=20
 api_used=0
 
 def ChampionCrawler():
@@ -17,7 +17,8 @@ def ChampionCrawler():
 
     for i in range(1,500):
 
-        URL='https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/'+str(i)+'?api_key='+api_key[0]
+        URL='https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/'+str(i)+'?api_key='\
+            +'RGAPI-4fd7f51d-86ea-4528-8523-fe1208c4c6c2'#api_key[0]
 
         try:
             x=urllib.request.urlopen(URL)
@@ -83,17 +84,19 @@ def SummonerNameCrawler():
 def SummonerIdCrawler(summonerName):
     #summonerName = summonerName.replace(" ", "%20")
     #print(usummonerName).encode('utf-8')
-    global api_idx
-    global api_used
+    #global api_idx
+    #global api_used
 
-    if api_used>=300 :
-        api_idx+=2
-        api_used=0
-        if api_idx>=len(api_key) : api_idx=0
+    #if api_used>=300 :
+    #    api_idx+=2
+    #    api_used=0
+    #    if api_idx>=len(api_key) : api_idx=0
 
     #summonerName=u = unicode(summonerName, "UTF-8")
-    URL=u'https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/%s?api_key=%s'%(summonerName,api_key[api_idx])
-    api_used+=1
+    URL=u'https://kr.api.pvp.net/api/lol/kr/v1.4/summoner/by-name/%s?api_key=%s'%(summonerName,
+                                                                                  'RGAPI-4fd7f51d-86ea-4528-8523-fe1208c4c6c2')
+                                                                                  #api_key[api_idx])
+    #api_used+=1
 
     # print("URL " + URL)
     try:
@@ -105,7 +108,7 @@ def SummonerIdCrawler(summonerName):
         #print(summonerName)
         summonerName=summonerName.replace(" ", "").lower()
 
-        #print(data[summonerName])
+        print(data[summonerName])
         return data[summonerName]['id']
 
 
@@ -114,12 +117,13 @@ def SummonerIdCrawler(summonerName):
         #return 'err'
 
 def MatchListCrawler(summonerId):
-    global api_idx
+    #global api_idx
 
 #    count=0
     matchIdList=[]
-    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/matchlist/by-summoner/'+summonerId+'?api_key='+api_key[api_idx+1]
-    #print(summonerId)
+    URL='https://kr.api.pvp.net/api/lol/kr/v2.2/matchlist/by-summoner/'+summonerId+'?api_key='\
+        +'RGAPI-4fd7f51d-86ea-4528-8523-fe1208c4c6c2'#api_key[api_idx+1]
+    print(summonerId)
 
     try:
         x = urllib.request.urlopen(URL)
@@ -128,7 +132,7 @@ def MatchListCrawler(summonerId):
         data = json.loads(rawData.decode(encoding))
         data=data['matches']
         for game in data:
-           if game['season']=='PRESEASON2017':
+            #if game['season']=='PRESEASON2017':
             #print(game['matchId'])
             matchIdList.append(game['matchId'])
             #count+=1
@@ -139,32 +143,37 @@ def MatchListCrawler(summonerId):
     except:
         pass
 
-def MatchInfoCrawler(matchListSet):
-    global api_idx
+def MatchInfoCrawler(matchListSet,filenumstart):
+    #global api_idx
 
-    idx=api_idx+1
-    used=0
-    filenum=1
+    #idx=api_idx+1
+    #used=0
+    filenum=filenumstart
     #print(filenum)
     for matchInfo in matchListSet:
-        #print(matchInfo)
-        URL='https://kr.api.pvp.net/api/lol/kr/v2.2/match/'+str(matchInfo)+'?api_key='+api_key[idx]
-        used+=1
-        if used>=300 :
-            idx+=1
-            used=0
-            if idx>=len(api_key):
-                idx=0
+        try:
+            #print(matchInfo)
+            URL = 'https://kr.api.pvp.net/api/lol/kr/v2.2/match/' + str(matchInfo) + '?api_key=' \
+                  + 'RGAPI-4fd7f51d-86ea-4528-8523-fe1208c4c6c2'  # api_key[idx]
+            # used+=1
+            # if used>=300 :
+            #    idx+=1
+            #    used=0
+            #    if idx>=len(api_key):
+            #        idx=0
 
-        x = urllib.request.urlopen(URL)
-        rawData = x.read()
-        encoding = x.info().get_content_charset('utf-8')
-        data = json.loads(rawData.decode(encoding))
-        jsonString=json.dumps(data)
-        #import pprint
-        #pprint.pprint(jsonString)
-        f=open('json_data/match'+str(filenum)+'.json','w')
-        f.write(str(jsonString))
-        f.close()
-        filenum+=1
+            x = urllib.request.urlopen(URL)
+            rawData = x.read()
+            encoding = x.info().get_content_charset('utf-8')
+            data = json.loads(rawData.decode(encoding))
+            jsonString = json.dumps(data)
+            # import pprint
+            # pprint.pprint(jsonString)
+            f = open('json_data/match' + str(filenum) + '.json', 'w')
+            f.write(str(jsonString))
+            print("here")
+            f.close()
+            filenum += 1
+        except:
+            pass
     return filenum
