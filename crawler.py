@@ -32,27 +32,46 @@ def ChampionCrawler():
     f.close()
 
 def SummonerNameCrawler():
+
     with open('names.txt', 'w', encoding='utf-8') as fw:
-        num_of_names = int(input('How many names do you want? : '))
+        from_index = int(input('From : '))
+        to_index = int(input('To : '))
+        num_of_names = to_index - from_index + 1
         num_pages = num_of_names // 50 + 2
-        cur_page = 1
+        cur_page = from_index // 50 + 1
+        start_count = (cur_page - 1) * 50 + 1
         count = 0
 
-        while True:
+        url = 'http://lol.inven.co.kr/dataninfo/ladder/index.php?pg=' + str(cur_page)
+        html = urllib.request.urlopen(url)
+        soup = bs4.BeautifulSoup(html, 'html.parser')
+        for link in soup.find_all('a'):
+            if link.get('href') is not None \
+                    and link.get('href')[:48] == "http://lol.inven.co.kr/dataninfo/player/list.php":
+                if start_count >= from_index:
+                    if len(link.contents) != 0:
+                        print(' '.join(link.contents[0].split()), file=fw)
+                    count += 1
+                else:
+                    start_count += 1
+
+                if count == num_of_names:
+                    break
+
+        cur_page += 1
+
+        while count != num_of_names:
             url = 'http://lol.inven.co.kr/dataninfo/ladder/index.php?pg=' + str(cur_page)
             html = urllib.request.urlopen(url)
             soup = bs4.BeautifulSoup(html, 'html.parser')
             for link in soup.find_all('a'):
                 if link.get('href') is not None \
-                        and link.get('href')[:48] == "http://lol.inven.co.kr/dataninfo/player/list.php" \
-                        and len(link.contents) != 0:
-                    print(' '.join(link.contents[0].split()), file=fw)
+                        and link.get('href')[:48] == "http://lol.inven.co.kr/dataninfo/player/list.php":
+                    if len(link.contents) != 0:
+                        print(' '.join(link.contents[0].split()), file=fw)
                     count += 1
                     if count == num_of_names:
                         break
-
-            if count == num_of_names:
-                break
 
             cur_page += 1
 
