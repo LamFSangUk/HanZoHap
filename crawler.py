@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-def ChampionCrawller():
+def ChampionCrawler():
 
     count=0
 
@@ -27,7 +27,7 @@ def ChampionCrawller():
     f.write(str(count))
     f.close()
 
-def SummonerCrawller():
+def SummonerCrawler():
 
     numSummoners=int(input())
     print(numSummoners)
@@ -47,7 +47,7 @@ def SummonerCrawller():
         except:
             pass
 
-def MatchlistCrawller():
+def MatchlistCrawler():
 
     count=0
     summonerID=input()
@@ -70,7 +70,7 @@ def MatchlistCrawller():
     except:
         pass
 
-def MatchInfoCrawller():
+def MatchInfoCrawler():
 
     matchInfo=input()
 
@@ -82,6 +82,9 @@ def MatchInfoCrawller():
     jsonString=json.dumps(data)
     import pprint
     pprint.pprint(jsonString)
+    f=open('match1.json','w')
+    f.write(jsonString)
+    f.close()
 
 print("start")
-MatchInfoCrawller()
+MatchInfoCrawler()
