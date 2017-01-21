@@ -18,6 +18,9 @@ getParticipants = lambda region, name, key : getCurrentGame(region, name, key)["
 
 getTeamId = lambda name, participants :  participants[0]["teamId"] if  participants[0]["summonerName"] == name else getTeamId(name, participants[1:])
 
+#-------------------------------------------------------------------------------------------------------------
+
+
 def getSameTeam(region, name, key) :
    try:
       participants = getParticipants(region, name, key)
