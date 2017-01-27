@@ -1,2 +1,2 @@
-API.py
-json_data/*.json
+Crawler/API.py
+Crawler/json_data/*.json

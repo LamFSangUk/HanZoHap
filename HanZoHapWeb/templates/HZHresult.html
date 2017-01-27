@@ -1,0 +1,59 @@
+<html>
+	<head><title>HanZoHapResult</title></head>
+	<body>
+		<div class="image">
+			
+			<img src={{url_for('static',filename="hzresultcopy.png")}} alt="" style="position:relative; top:0; left:0;width:900px;height:1800px;"/>
+	
+		{% for i in range(picklist|length) %}	
+			{% set left = i*170+67 %}
+		<img src="../../static/champ/{{ picklist[i] }}.png" style="position:absolute; top:253; left:{{ left }}; width:100px; height: 100px;"/>
+		{% endfor %}
+		</div>
+			<font size="9" style="position:absolute; top:550; left:550;"> {{ winrate }}
+			<font size="4" color="#000" face="KoreanCTR" style="position:relative; top:217; left:-580;"> 소환사 이름:
+			
+			<form method='POST' action="/api/datas/">
+				<input type="text" name="SummonerName" size="65" style="position:relative; top:-30; left:290;"/>
+  				<input type="submit" value="Search" style="position:relative; top:-30; left:380;"/>
+			<br>
+			
+			<font size="4" color="#000" face="KoreanCTR" style="position:relative; top:100; left:100;">챔피언 1:
+			<font style="position:relative; top:0; left:100;">챔피언 2:
+			<font style="position:relative; top:0; left:100;">챔피언 3:
+			<font style="position:relative; top:0; left:100;">챔피언 4:
+			<font style="position:relative; top:0; left:100;">챔피언 5:
+			<select name="champ1" style="position:absolute; top:0; left:-617;">
+					<option value="default">--옵션--</option>
+				{% for champ in champion %}
+					<option value="{{ champ }}">{{ champ }}</option>
+				{% endfor %}
+			</select>
+			<select name="champ2" style="position:absolute; top:0; left:-445;">
+					<option value="default">--옵션--</option>
+				{% for champ in champion %}
+					<option value="{{ champ }}">{{ champ }}</option>
+				{% endfor %}
+			</select>
+			<select name="champ3" style="position:absolute; top:0; left:-272;">
+					<option value="default">--옵션--</option>
+				{% for champ in champion %}
+					<option value="{{ champ }}">{{ champ }}</option>
+				{% endfor %}
+			</select>
+			<select name="champ4" style="position:absolute; top:0; left:-100;">
+					<option value="default">--옵션--</option>
+				{% for champ in champion %}
+					<option value="{{ champ }}">{{ champ }}</option>
+				{% endfor %}
+			</select>
+			<select name="champ5" style="position:absolute; top:0; left:71;">
+					<option value="default">--옵션--</option>
+				{% for champ in champion %}
+					<option value="{{ champ }}">{{ champ }}</option>
+				{% endfor %}
+			</select>
+		</form>
+
+	</body>
+</html>
